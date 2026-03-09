@@ -1,0 +1,69 @@
+function remoteControl(brick)
+
+%
+% Keyboard Remote Control
+%
+
+brick.ResetMotorAngle('A');
+
+global key;
+
+InitKeyboard();
+
+while 1
+
+    %pause(0.1);
+
+    switch key
+
+        case 'uparrow'
+
+            brick.MoveMotor('AB', 40);
+
+        case 'downarrow'
+
+            brick.MoveMotor('AB', -40);
+
+        case 'leftarrow'
+
+            brick.MoveMotor('B', 20);
+            brick.MoveMotor('A', -20);
+            
+
+        case 'rightarrow'
+
+            brick.MoveMotor('A', 20);
+            brick.MoveMotor('B', -20);
+
+        case 'space'
+
+            brick.MoveMotor('AB', 0);
+
+        case 'q'
+
+            brick.MoveMotor('AB', 0);
+            break;
+
+        case 'w'
+
+            brick.MoveMotor('C', 50);
+
+        case 's'
+
+            brick.MoveMotor('C', -50);
+
+        case 'e'
+
+            brick.MoveMotor('C', 0);
+
+    end
+
+    position = brick.GetMotorAngle('A'); % Get Current Position
+
+    fprintf("Current Angle: \n");
+    display(position);
+    display(key);
+
+end
+
+end %function end

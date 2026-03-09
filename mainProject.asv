@@ -1,0 +1,158 @@
+% Main complete movement test, this is a compilation of the complete maze
+% navigation program
+
+% Team Tykes, Group 7
+
+% Run this program by clicking Run on the top right, 
+% CONNECT BRICK FIRST see command below
+% switch to remote control using the 'r' button, then moving with arrow
+% keys (more in file remoteControl.m)
+% 
+
+% TO DO
+% if the distance is < 5, back up a little
+% how to maintain distance between sensor and wall
+% distance maintain still WIP, try adding statement where continues as nor
+%mal between say 15 and 25, only trys correction if < 15 or > 25
+% redo passenger management
+
+% these are functions you can copy and past into the command window to use
+
+% This connects the computer to the brick DO THIS FIRST
+% brick = ConnectBrick('TEAM1');
+% brick.beep(); Use this to make the robot beep, check if it's connected
+
+% This turns off the motor
+% brick.MoveMotor('AB', 0);
+
+global key;
+motorAngle = 0;
+wallCheck = 0;
+InitKeyboard();
+aSpeed = 45;
+bSpeed= 40;
+brick.SetColorMode(4, 2); % Set Color Sensor connected to Port 4 to Color RGB Mode. 
+brick.ResetMotorAngle('AB'); % sets angle to 0, unused right now
+
+while(1)
+
+% this pause is required here for key inputs to be registered
+
+    pause(0.1);  
+
+% starts both motors at 30 out of 100
+
+    brick.MoveMotor('A', aSpeed);
+    brick.MoveMotor('B', bSpeed);
+    
+
+
+% 'r' key switches to remote control
+% 'q' key stops the car and ends the program
+% 't' does nothing
+
+    switch key
+        case 'r'
+            brick.MoveMotor('AB', 0);
+            pause(.5);
+            CloseKeyboard();
+            remoteControl(brick);
+        case 't'            
+        case 'q'
+            brick.MoveMotor('AB', 0);
+            pause(.5);
+            CloseKeyboard();
+            break;
+        
+    end
+
+%
+% Checks for a wall, reference function ultrasonicSensor in file
+%   ultrasonicSensor.m
+% If wallCheck returns 1, no longer sees wall
+%   moves forward a bit, turns right, moves forward a bit before continuing
+
+    wallCheck = ultrasonicSensor(brick); 
+
+    while (wallCheck == 1)    
+
+        brick.MoveMotor('A', aSpeed);
+        brick.MoveMotor('B', bSpeed);
+        pause(.1);
+
+        brick.MoveMotor('A', -aSpeed);
+        brick.MoveMotor('B', -bSpeed);
+        pause(.8);
+        
+        %brick.ResetMotorAngle('B');
+        %brick.MoveMotorAngleRel('B', 40, 90, 'Brake');
+        %brick.WaitForMotor('B');
+
+        brick.MoveMotor('B', 25);
+        brick.MoveMotor('A', -25);
+        pause(.7);
+
+        brick.MoveMotor('A', aSpeed);
+        brick.MoveMotor('B', bSpeed);
+        pause(2);
+        wallCheck = ultrasonicSensor(brick);
+        
+        %brick.beep();
+        
+    end
+
+%
+% Color Testing 
+%    
+%    function colorSensorTest checks what color number the sensor reads
+%    function colorSwitch changes the number to a color word for output
+%    function colorResponse responds in certain ways based on the color
+%        read by the sensor (check colorResponse.m)
+
+%   Currently on
+
+    colorNum = colorSensorTest(brick);
+    colorName = colorSwitch(colorNum);
+    colorResponse(brick, colorNum);
+
+
+% Touch Response Testing
+
+    touch = touchResponseTest(brick);
+
+    if (touch == 1)
+
+
+        brick.MoveMotor('A', -aSpeed)
+        brick.MoveMotor('B', -bSpeed)
+        pause(1);
+       
+        brick.ResetMotorAngle('A');
+        brick.MoveMotorAngleRel('A', 40, 70, 'Brake');
+
+        brick.WaitForMotor('A');
+        
+        pause(1);
+       
+
+        %brick.MoveMotor('B', -25);
+        %brick.MoveMotor('A', 25);
+        %pause(2800/2000);
+        %brick.MoveMotor('A', 40)
+        %brick.MoveMotor('B', 42)
+        %pause(1);
+
+    end
+
+
+
+%
+% Displays Current Values
+%
+
+   %display(colorNum);
+   %display(colorName);
+   %display(motorAngle);
+   
+end % end main
+
