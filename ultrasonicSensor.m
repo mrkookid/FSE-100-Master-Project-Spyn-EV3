@@ -5,8 +5,8 @@ function wallCheck = ultrasonicSensor(brick)
 % returns 1 - 255 ish, 255 if too far
 
 % Ultrasonic Sensor Test
-% Values maintanDistanceValue tries to maintain specified
-% distance between sensor and wall
+% Values maintainDistanceValue tries to maintain specified
+%       distance between sensor and wall
 % distanceAdjustValue subtracts it from current distance
 % if negative, current distance is smaller than maintainDistance, so turn away
 % if positive, current distance is greater than maintain distance, so turn closer
@@ -74,18 +74,6 @@ function wallCheck = ultrasonicSensor(brick)
 
       end
 
-      %if (distance <= 8)
-
-       %   brick.MoveMotor('AB', 0);
-        %  pause(.1);
-         % brick.MoveMotor('AB', -30);
-          %pause(1);
-         % brick.MoveMotor('B', 25);
-          %brick.MoveMotor('A', 25);
-          %pause(.5);
-
-
-      %end
-
 end
+
 
