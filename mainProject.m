@@ -4,17 +4,11 @@
 % Team Tykes, Group 7
 
 % Run this program by clicking Run on the top right, 
-% CONNECT BRICK FIRST see command below
+% CONNECT BRICK FIRST using:
+% brick = ConnectBrick('TEAM1');
+
 % switch to remote control using the 'r' button, then moving with arrow
 % keys (more in file remoteControl.m)
-% 
-
-% TO DO
-% if the distance is < 5, back up a little
-% how to maintain distance between sensor and wall
-% distance maintain still WIP, try adding statement where continues as nor
-%mal between say 15 and 25, only trys correction if < 15 or > 25
-% redo passenger management
 
 % these are functions you can copy and past into the command window to use
 
@@ -25,10 +19,14 @@
 % This turns off the motor
 % brick.MoveMotor('AB', 0);
 
+
 global key;
 motorAngle = 0;
 wallCheck = 0;
 InitKeyboard();
+
+% The motors can sometimes move at different speeds
+% Change the values here for micro adjustments
 
 aSpeed = 45;
 bSpeed= 40;
@@ -42,7 +40,7 @@ while(1)
 
     pause(0.1);  
 
-% starts both motors at 30 out of 100
+% starts both motors at speeds based on aSpeed and bSpeed variables above
 
     brick.MoveMotor('A', aSpeed);
     brick.MoveMotor('B', bSpeed);
@@ -65,7 +63,6 @@ while(1)
             pause(.5);
             CloseKeyboard();
             break;
-        
     end
 
 %
@@ -135,14 +132,6 @@ while(1)
         brick.WaitForMotor('A');
         
         pause(1);
-       
-
-        %brick.MoveMotor('B', -25);
-        %brick.MoveMotor('A', 25);
-        %pause(2800/2000);
-        %brick.MoveMotor('A', 40)
-        %brick.MoveMotor('B', 42)
-        %pause(1);
 
     end
 
@@ -152,9 +141,10 @@ while(1)
 % Displays Current Values
 %
 
-   %display(colorNum);
-   %display(colorName);
-   %display(motorAngle);
+   display(colorNum);
+   display(colorName);
+   display(motorAngle);
    
 end % end main
+
 
