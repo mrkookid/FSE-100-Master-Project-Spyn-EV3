@@ -2,14 +2,17 @@ function remoteControl(brick)
 
 %
 % Keyboard Remote Control
-%
+% This function allows manual control of the machine
+% With various keyboard keys
+%    Arrow keys for movement of motor A and B, main wheels
+%    Space for brake
+%    'o' to turn off the motors and exit
+%    'w', 's', and 'e' to control motor C, lifter arm
 
 brick.ResetMotorAngle('A');
 
 global key;
-
 InitKeyboard();
-
 
 while 1
 
@@ -71,3 +74,4 @@ while 1
 end
 
 end %function end
+
